@@ -34,7 +34,7 @@ var Quad = function(app)
 		gl.STATIC_DRAW);
 
 	this.depth = 0.2;
-	this.opacityCast = 0;
+	this.opacityCast = 1;
 
 	this.vertexBuffer.itemSize = 2;
 	this.vertexBuffer.numItems = 4;
