@@ -24,21 +24,21 @@ vec4 getColor(vec4 point)
 
     // Egy szeleten belül az pont koordinátááihoz tartozó textúra koordináták
     float sliceOffsetX = (point.x * sliceSizePx) / textureSizePx;
-    float sliceOffsetY = (point.y * sliceSizePx) / textureSizePx;
+    float sliceOffsetY = (point.z * sliceSizePx) / textureSizePx;
 
     // A mélységi érték által kijelölt szelet sorának indexe, értéke 0-slicesPerRow közt lehet
-    float sliceRowIndex = floor(floor(point.z * numSlices) / slicesPerRow);
+    float sliceRowIndex = floor(floor(point.y * numSlices) / slicesPerRow);
     // A következő szelet sorának indexe
-    float nextSliceRowIndex = floor( ceil(point.z * numSlices) / slicesPerRow);
+    float nextSliceRowIndex = floor( ceil(point.y * numSlices) / slicesPerRow);
     if(nextSliceRowIndex >= slicesPerRow)
     {
         nextSliceRowIndex = sliceRowIndex;
     }
 
     // A szelet oszlopának indexe
-    float sliceColIndex =     floor(point.z * numSlices) - sliceRowIndex * slicesPerRow;
+    float sliceColIndex =     floor(point.y * numSlices) - sliceRowIndex * slicesPerRow;
     // A következő szelet oszlopának indexe
-    float nextSliceColIndex =  ceil(point.z * numSlices) - nextSliceRowIndex * slicesPerRow;
+    float nextSliceColIndex =  ceil(point.y * numSlices) - nextSliceRowIndex * slicesPerRow;
     if(nextSliceColIndex >= slicesPerRow)
     {
         nextSliceColIndex = sliceColIndex;
@@ -61,7 +61,7 @@ vec4 getColor(vec4 point)
     vec4 sample1 = texture2D(volume, sample1pt);
     vec4 sample2 = texture2D(volume, sample2pt);
 
-    float a = point.z * numSlices - floor(point.z * numSlices);
+    float a = point.y * numSlices - floor(point.y * numSlices);
     vec4 resampled = mix(sample2, sample1, a); // sample1 * (a) + sample2 * (1.0 - a);
 
     return vec4(resampled.rgb, 1.0);
